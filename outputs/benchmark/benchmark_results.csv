@@ -1,0 +1,3 @@
+Model,Average Latency (ms),FPS
+PyTorch YOLOv8n,68.44,14.61
+ONNX YOLOv8n,168.24,5.94
