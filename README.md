@@ -1,37 +1,36 @@
-# Autonomous Driving Perception System
+
+# Autonomous Driving Perception Stack
 
 ## Project Overview
 
-The Autonomous Driving Perception System is a computer vision-based project designed to analyze road environments and identify important driving conditions using deep learning and image processing techniques.
+The Autonomous Driving Perception Stack is a computer vision and deep learning-based project designed to analyze road environments and identify important driving information.
 
-The system integrates object detection, object tracking, lane detection, semantic segmentation and monocular depth estimation into a unified perception pipeline.
+The system integrates multiple perception modules to process road images and videos, detect vehicles, identify lane markings, and estimate scene depth.
 
-## Key Features
+## Project Objectives
 
-- **Object Detection:** YOLOv8 for detecting vehicles and other road objects.
-- **Object Tracking:** Tracking detected objects across video frames.
-- **Lane Detection:** Identifying road lane boundaries using OpenCV.
-- **Semantic Segmentation:** SegFormer-B0 for road scene segmentation.
-- **Depth Estimation:** MiDaS for estimating relative depth from images.
-- **Model Optimization:** Exporting YOLOv8 to ONNX format.
-- **Performance Benchmarking:** Comparing PyTorch and ONNX inference performance.
-- **Perception Pipeline:** Integrating multiple perception modules.
+- Detect vehicles and other road objects using YOLOv8.
+- Identify road lanes using computer vision techniques.
+- Perform road segmentation.
+- Estimate relative depth using MiDaS.
+- Track detected objects across video frames.
+- Integrate multiple perception modules into a single pipeline.
+- Evaluate model performance and support ONNX model export.
 
 ## Technologies Used
 
 - Python
-- PyTorch
-- YOLOv8
 - OpenCV
-- Hugging Face Transformers
-- SegFormer
+- NumPy
+- PyTorch
+- Ultralytics YOLOv8
 - MiDaS
 - ONNX
-- NumPy
 - Matplotlib
-- Pytest
+- PyTest
+- Git and GitHub
 
-## Project Architecture
+## Project Structure
 
 ```text
 Autonomous-Driving-Perception/
@@ -40,10 +39,23 @@ Autonomous-Driving-Perception/
 │   ├── bus.jpg
 │   └── road.jpg
 │
+├── docs/
+│
 ├── models/
-│   └── yolov8n.onnx
 │
 ├── outputs/
+│   ├── benchmark/
+│   ├── depth_estimation/
+│   ├── integrated_pipeline/
+│   ├── lane_detection/
+│   ├── lane_segmentation/
+│   ├── object_detection/
+│   ├── object_tracking/
+│   └── screenshots/
+│       ├── perception_result.jpg
+│       ├── depth_result.jpg
+│       ├── lane_result.jpg
+│       └── edge_result.jpg
 │
 ├── simulator/
 │   ├── docs/
@@ -55,154 +67,145 @@ Autonomous-Driving-Perception/
 │
 ├── src/
 │   ├── depth_estimation/
-│   │   └── depth.py
 │   ├── lane_detection/
-│   │   └── lane.py
 │   ├── lane_segmentation/
-│   │   └── segmentation.py
 │   ├── object_detection/
-│   │   └── detect.py
 │   ├── object_tracking/
-│   │   └── track.py
-│   └── optimization/
-│       ├── benchmark.py
-│       └── export_onnx.py
+│   ├── optimization/
+│   └── pipeline.py
 │
 ├── tests/
 │   └── test_pipeline.py
 │
 ├── requirements.txt
-├── README.md
-├── .gitignore
+├── yolov8n.onnx
 ├── yolov8n.pt
-└── yolov8n.onnx
+└── README.md
 ```
 
-## Installation
+## Modules Description
 
-### 1. Clone the Repository
+### 1. Object Detection
+
+Uses YOLOv8 to detect vehicles and other objects in road images.
+
+### 2. Lane Detection
+
+Uses OpenCV image-processing techniques to identify road lane markings.
+
+### 3. Lane Segmentation
+
+Identifies road regions and lane areas using image segmentation techniques.
+
+### 4. Depth Estimation
+
+Uses MiDaS to estimate relative depth information from a single road image.
+
+### 5. Object Tracking
+
+Tracks detected objects across video frames.
+
+### 6. Video Simulation
+
+Uses a webcam or video input to test the perception system.
+
+### 7. Optimization
+
+Includes benchmarking and ONNX model export functionality.
+
+### 8. Integrated Perception Pipeline
+
+Combines multiple perception modules to generate road-scene analysis results.
+
+## Project Results
+
+The perception pipeline successfully generated the following outputs.
+
+### 1. Object Detection and Lane Detection
+
+![Perception Result](outputs/screenshots/perception_result.jpg)
+
+### 2. Depth Estimation
+
+![Depth Estimation](outputs/screenshots/depth_result.jpg)
+
+### 3. Lane Detection
+
+![Lane Detection](outputs/screenshots/lane_result.jpg)
+
+### 4. Edge Detection
+
+![Edge Detection](outputs/screenshots/edge_result.jpg)
+
+## Execution Steps
+
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/bayyabhavana/Autonomous-Driving-Perception.git
 ```
 
-### 2. Navigate to the Project
+### Step 2: Navigate to Project Directory
 
 ```bash
 cd Autonomous-Driving-Perception
 ```
 
-### 3. Create Virtual Environment
+### Step 3: Create Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-### 4. Activate Virtual Environment
-
-Windows PowerShell:
+### Step 4: Activate Virtual Environment (Windows)
 
 ```powershell
-.\venv\Scripts\Activate.ps1
+venv\Scripts\activate
 ```
 
-### 5. Install Dependencies
+### Step 5: Install Dependencies
 
 ```bash
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-## Execution
+### Step 6: Run Perception Pipeline
 
-Run individual modules:
-
-**Object Detection**
-```bash
-python src/object_detection/detect.py
-```
-
-**Object Tracking**
-```bash
-python src/object_tracking/track.py
-```
-
-**Lane Detection**
-```bash
-python src/lane_detection/lane.py
-```
-
-**Semantic Segmentation**
-```bash
-python src/lane_segmentation/segmentation.py
-```
-
-**Depth Estimation**
-```bash
-python src/depth_estimation/depth.py
-```
-
-**ONNX Export**
-```bash
-python src/optimization/export_onnx.py
-```
-
-**Benchmarking**
-```bash
-python src/optimization/benchmark.py
-```
-
-**Integrated Perception Pipeline**
 ```bash
 python simulator/src/perception_pipeline.py
 ```
 
-## Performance Benchmark Results
-
-| Model | Average Latency | FPS |
-|---|---:|---:|
-| PyTorch YOLOv8n | 68.44 ms | 14.61 |
-| ONNX YOLOv8n | 168.24 ms | 5.94 |
-
-*Benchmark results obtained in the project's CPU environment. Performance depends on hardware and execution conditions.*
-
-## Testing
-
-Run the project tests:
+### Step 7: Run Tests
 
 ```bash
 python -m pytest tests -v
 ```
 
-Test results:
+## Testing
 
-- Bus image existence – Passed
-- Road image existence – Passed
-- Bus image loading – Passed
-- Road image loading – Passed
+The project includes automated tests to verify:
 
-**Total: 4 tests passed.**
+- Dataset image availability.
+- Image loading functionality.
+- Pipeline input validation.
 
-## Output Results
+The current test execution completed successfully with **4 passed test cases**.
 
-The integrated pipeline generates:
+## Model Information
 
-- perception_result.jpg
-- depth_result.jpg
-- lane_result.jpg
-- edge_result.jpg
+- Object Detection Model: YOLOv8n
+- Depth Estimation Model: MiDaS
+- Model Export Format: ONNX
 
-Additional outputs are saved in their respective module output folders.
+## Output Directory
 
-## Hardware and Environment
+All generated outputs are organized under the `outputs/` and `simulator/outputs/` directories.
 
-- Operating System: Windows 11
-- Python: 3.13.5
-- Execution Device: CPU
-- Processor Graphics: Intel HD Graphics 620
+## Conclusion
 
-## Project Objective
+The Autonomous Driving Perception Stack demonstrates the integration of computer vision and deep learning techniques for autonomous driving applications.
 
-The objective of this project is to develop an integrated autonomous driving perception pipeline capable of understanding road environments through computer vision and deep learning.
+The project combines object detection, lane detection, lane segmentation, object tracking, and depth estimation into a unified perception workflow.
 
 ## Author
 
@@ -210,6 +213,4 @@ The objective of this project is to develop an integrated autonomous driving per
 
 GitHub: https://github.com/bayyabhavana
 
-## License
-
-This project is intended for educational and research purposes.
+Project Repository: https://github.com/bayyabhavana/Autonomous-Driving-Perception
