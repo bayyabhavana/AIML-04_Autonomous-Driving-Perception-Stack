@@ -40,3 +40,4 @@ wandb/
 
 # Temporary files
 *.tmp
+datasets/kitti/
