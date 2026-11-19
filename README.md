@@ -1,273 +1,482 @@
-# 🚗 Autonomous Driving Perception Stack
+# Autonomous Driving Perception Stack
 
-An AI-powered autonomous driving perception system using Computer Vision and Deep Learning to understand road environments through object detection, lane detection, lane segmentation, object tracking and depth estimation.
+## Project Overview
 
-## 📌 Project Overview
+The **Autonomous Driving Perception Stack** is an AI/ML-based project that explores computer vision techniques used in autonomous driving systems. It combines object detection, lane detection, semantic segmentation, monocular depth estimation, object tracking, and image-processing techniques to understand road scenes.
 
-The Autonomous Driving Perception Stack is a computer vision and deep learning-based project designed to analyze road environments and identify important driving information.
+The project uses YOLOv8 for object detection, OpenCV for lane detection, MiDaS for relative depth estimation, SegFormer for semantic segmentation experiments, and ROS 2 for image-message communication.
 
-The system integrates multiple perception modules to process road images and videos, detect vehicles, identify lane markings, track objects and estimate relative scene depth.
+It also includes KITTI dataset label analysis, ONNX model export and inference, and CPU performance benchmarking.
 
-## 🎯 Project Objectives
+## Project Objectives
 
-- Detect vehicles and other road objects using YOLOv8.
-- Identify road lanes using computer vision techniques.
-- Perform road segmentation.
-- Estimate relative depth using MiDaS.
-- Track detected objects across video frames.
-- Integrate multiple perception modules into a unified pipeline.
-- Evaluate model performance and support ONNX model export.
+- Explore the KITTI dataset and analyze object-class distribution.
+- Perform road-scene object detection using YOLOv8.
+- Experiment with object tracking using ByteTrack.
+- Detect road lanes using OpenCV image-processing techniques.
+- Perform semantic segmentation using a pretrained SegFormer model.
+- Estimate relative depth from images using MiDaS.
+- Build a basic perception pipeline combining multiple computer vision modules.
+- Experiment with ROS 2 image publishing and processing.
+- Export YOLOv8 to ONNX and compare inference performance.
+- Document implementation results, limitations, and future improvements.
 
-## 🛠️ Technologies Used
+## Technologies Used
 
-| Technology | Purpose |
+| Category | Technologies |
 |---|---|
-| Python | Programming language |
-| OpenCV | Image processing |
-| NumPy | Numerical operations |
-| PyTorch | Deep learning |
-| YOLOv8 | Object detection |
-| MiDaS | Depth estimation |
-| ONNX | Model optimization and inference |
-| Matplotlib | Visualization |
-| PyTest | Automated testing |
-| Git & GitHub | Version control |
+| Programming Language | Python |
+| Object Detection | YOLOv8, Ultralytics |
+| Object Tracking | ByteTrack |
+| Image Processing | OpenCV |
+| Semantic Segmentation | SegFormer, Cityscapes pretrained model |
+| Depth Estimation | MiDaS |
+| Dataset | KITTI |
+| Deep Learning | PyTorch |
+| Model Optimization | ONNX |
+| Robotics Middleware | ROS 2 |
+| Data Analysis | Pandas, Matplotlib |
+| Testing | Pytest |
+| Version Control | Git, GitHub |
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 Autonomous-Driving-Perception/
 │
 ├── datasets/
 │   ├── bus.jpg
-│   └── road.jpg
+│   ├── road.jpg
+│   └── kitti/
+│       └── training/
+│           └── label_2/
 │
 ├── docs/
+│   └──
+│
 ├── models/
 │   └── yolov8n.onnx
 │
 ├── outputs/
 │   ├── benchmark/
-│   ├── depth_estimation/
-│   ├── integrated_pipeline/
-│   ├── lane_detection/
+│   │   └── benchmark_results.csv
+│   │
+│   ├── dataset_analysis/
+│   │   ├── kitti_class_distribution.csv
+│   │   └── kitti_class_distribution.png
+│   │
 │   ├── lane_segmentation/
-│   ├── object_detection/
-│   ├── object_tracking/
-│   └── screenshots/
-│       ├── perception_result.jpg
-│       ├── depth_result.jpg
-│       ├── lane_result.jpg
-│       └── edge_result.jpg
+│   └── object_tracking/
 │
 ├── simulator/
-│   ├── docs/
+│   ├── carla/
+│   │   ├── carla_client.py
+│   │   └── README.md
+│   │
 │   ├── outputs/
+│   │
 │   ├── recordings/
-│   └── src/
-│       ├── perception_pipeline.py
-│       └── video_simulator.py
+│   │
+│   ├── src/
+│   │   ├── perception_pipeline.py
+│   │   └── video_simulator.py
+│   │
+│   └── ros2/
+│       └── perception_ws/
 │
 ├── src/
-│   ├── depth_estimation/
+│   ├── dataset_analysis/
+│   │   └── kitti_analysis.py
+│   │
 │   ├── lane_detection/
+│   │   └── lane.py
+│   │
 │   ├── lane_segmentation/
-│   ├── object_detection/
+│   │   └── segmentation.py
+│   │
 │   ├── object_tracking/
-│   ├── optimization/
-│   └── pipeline.py
+│   │   └── track.py
+│   │
+│   └── optimization/
+│       └── wandb_tracking.py
 │
 ├── tests/
 │   └── test_pipeline.py
 │
 ├── requirements.txt
+├── README.md
 ├── yolov8n.pt
-├── yolov8n.onnx
-└── README.md
+└── yolov8n.onnx
 ```
 
-## 🧠 Modules Description
+*Note: This is the documented project layout. Keep only folders and files that actually exist in your repository. The KITTI dataset files are local and are not included in the GitHub repository.*
 
-### 1. Object Detection
-Uses YOLOv8 to detect vehicles and other objects in road images.
+## 1. KITTI Dataset Analysis
 
-### 2. Lane Detection
-Uses OpenCV image-processing techniques to identify road lane markings.
+The KITTI dataset is used to explore object labels commonly found in autonomous driving environments.
 
-### 3. Lane Segmentation
-Identifies road regions and lane areas using image segmentation techniques.
+A Python script was developed to read the KITTI label files and calculate the distribution of object classes.
 
-### 4. Depth Estimation
-Uses MiDaS to estimate relative depth information from a single road image.
+**Script:**
+`src/dataset_analysis/kitti_analysis.py`
 
-### 5. Object Tracking
-Tracks detected objects across video frames.
+**Generated outputs:**
+- `outputs/dataset_analysis/kitti_class_distribution.csv`
+- `outputs/dataset_analysis/kitti_class_distribution.png`
 
-### 6. Video Simulation
-Uses webcam or video input to test the perception system.
+### Dataset Analysis Results
 
-### 7. Optimization
-Includes model benchmarking and ONNX model export functionality.
+- Label files analyzed: **1,600**
+- Total annotations: **11,061**
 
-### 8. Integrated Perception Pipeline
-Combines multiple perception modules to generate road-scene analysis results.
+| Object Class | Annotation Count |
+|---|---:|
+| Car | 5,991 |
+| DontCare | 2,385 |
+| Pedestrian | 1,111 |
+| Van | 607 |
+| Cyclist | 392 |
+| Truck | 236 |
+| Misc | 186 |
+| Tram | 108 |
+| Person_sitting | 45 |
+| **Total** | **11,061** |
 
-## 📸 Project Results
+The analysis provides an overview of object-class frequency in the available KITTI training labels. The `DontCare` category is included in the label count.
 
-The perception pipeline successfully generated the following outputs.
+### KITTI Class Distribution
 
-### 1. Object Detection and Lane Detection
+![KITTI Class Distribution](outputs/dataset_analysis/kitti_class_distribution.png)
 
-![Perception Result](outputs/screenshots/perception_result.jpg)
+## 2. Object Detection Using YOLOv8
 
-### 2. Depth Estimation
+YOLOv8 is used to detect objects in road-scene images.
 
-![Depth Result](outputs/screenshots/depth_result.jpg)
+The pretrained YOLOv8n model was used to identify objects such as cars and people.
 
-### 3. Lane Detection
+**Implementation:**
+- Load the YOLOv8n model.
+- Read the input road image.
+- Perform object detection.
+- Display detected objects and confidence scores.
+- Save the resulting detection image.
 
-![Lane Result](outputs/screenshots/lane_result.jpg)
+**Model:** YOLOv8n
 
-### 4. Edge Detection
+**Framework:** Ultralytics
 
-![Edge Result](outputs/screenshots/edge_result.jpg)
+## 3. Object Tracking Using ByteTrack
 
-## ⚡ Model Benchmark Results
+Object tracking was explored using the YOLOv8 tracking functionality with the ByteTrack tracker.
 
-The project includes performance benchmarking between PyTorch YOLOv8n and ONNX YOLOv8n.
+The tracking script uses video or webcam frames to detect and track objects across frames.
 
-| Model | Average Latency | FPS |
+**Implementation:**
+- Capture video frames.
+- Run YOLO object detection.
+- Apply ByteTrack tracking.
+- Display tracking results.
+- Save the output video.
+
+**Script:** `src/object_tracking/track.py`
+
+**Output:** `outputs/object_tracking/`
+
+This is a basic tracking experiment. Quantitative tracking accuracy has not yet been evaluated.
+
+## 4. Lane Detection Using OpenCV
+
+OpenCV techniques were used to identify possible lane markings in road images.
+
+The lane detection prototype includes:
+
+- Image loading and preprocessing.
+- Grayscale conversion.
+- Gaussian blur.
+- Canny edge detection.
+- Region-of-interest masking.
+- Hough Line Transform.
+- Lane-line visualization.
+
+**Script:** `src/lane_detection/lane.py`
+
+The implementation demonstrates traditional computer vision techniques for road-lane detection. Detection quality can vary depending on image conditions.
+
+## 5. Semantic Segmentation Using SegFormer
+
+A pretrained SegFormer model was used for semantic segmentation experiments.
+
+The model was loaded using the Hugging Face Transformers library and tested on road-scene images.
+
+**Model:** SegFormer-B0
+
+**Dataset:** Cityscapes pretrained model
+
+**Implementation:**
+- Load the pretrained segmentation model.
+- Preprocess the input image.
+- Perform semantic segmentation.
+- Identify road-related classes.
+- Generate and save the segmentation output.
+
+**Script:** `src/lane_segmentation/segmentation.py`
+
+This implementation is a pretrained inference experiment, not a custom fine-tuned segmentation model.
+
+## 6. Monocular Depth Estimation Using MiDaS
+
+MiDaS was used to estimate relative depth information from a single road image.
+
+The depth estimation module generates a depth map that represents relative distance patterns within the image.
+
+**Implementation:**
+- Load the input image.
+- Preprocess the image.
+- Run the MiDaS model.
+- Generate the relative depth map.
+- Save the depth visualization.
+
+**Output:** `simulator/outputs/depth_result.jpg`
+
+The generated depth map represents relative depth and should not be interpreted as calibrated distance measurements in metres.
+
+## 7. Integrated Perception Pipeline
+
+A basic perception pipeline was developed to experiment with multiple computer vision operations on road-scene images.
+
+The pipeline combines:
+
+1. YOLOv8 object detection.
+2. OpenCV-based lane detection.
+3. MiDaS relative depth estimation.
+4. Image-processing operations and result visualization.
+
+**Main script:** `simulator/src/perception_pipeline.py`
+
+The pipeline demonstrates how different perception modules can contribute to road-scene understanding. It is an image-based prototype and is not a complete autonomous vehicle control system.
+
+## 8. ROS 2 Integration
+
+ROS 2 was explored for communication between camera-image publishing and perception-processing nodes.
+
+The perception node subscribes to the raw camera image topic, processes incoming frames, and publishes processed image messages.
+
+**ROS 2 topics used:**
+
+- `/camera/image_raw` – Input camera image topic.
+- `/camera/image_processed` – Processed image output topic.
+
+The ROS 2 image communication and processing workflow was tested independently.
+
+**Workspace:** `simulator/ros2/perception_ws/`
+
+Live CARLA camera integration has not yet been completed.
+
+## 9. ONNX Model Export and Inference
+
+The YOLOv8n model was exported to the ONNX format to experiment with model portability and inference.
+
+**Model files:**
+- `models/yolov8n.onnx`
+- `yolov8n.onnx`
+
+ONNX inference was tested using an input image, and the model successfully produced object detections.
+
+## 10. Performance Benchmarking
+
+A basic CPU benchmarking experiment was conducted to compare YOLOv8n inference using PyTorch and ONNX.
+
+### Benchmark Results
+
+| Model Format | Average Latency | FPS |
 |---|---:|---:|
 | PyTorch YOLOv8n | 109.37 ms | 9.14 |
 | ONNX YOLOv8n | 243.51 ms | 4.11 |
 
-**Benchmark Environment:**
-- Python: 3.13.5
-- PyTorch: 2.15.0+cpu
-- Processor: Intel Core i5-7300U 2.60 GHz
-- Device: CPU
+**Benchmark output:** `outputs/benchmark/benchmark_results.csv`
 
-*Note: These measurements represent the observed performance in this particular CPU environment.*
+### Observations
 
-Benchmark results are saved in:
+- PyTorch achieved lower average inference latency in this experiment.
+- ONNX inference was slower in the tested CPU environment.
+- The results depend on the hardware, software configuration, and inference settings.
+- ONNX export and inference were validated, but performance improvement was not achieved in this benchmark.
 
-```text
-outputs/benchmark/benchmark_results.csv
-```
+TensorRT optimization and benchmarking have not yet been completed.
 
-## 🚀 Installation and Execution
+## 11. Testing
 
-### Step 1: Clone the Repository
+Basic automated tests were created using Pytest.
 
-```bash
-git clone https://github.com/bayyabhavana/Autonomous-Driving-Perception.git
-```
+**Test file:** `tests/test_pipeline.py`
 
-### Step 2: Navigate to Project Directory
+The tests check:
 
-```bash
-cd Autonomous-Driving-Perception
-```
+- Availability of the sample bus image.
+- Availability of the sample road image.
+- Successful loading of the bus image.
+- Successful loading of the road image.
 
-### Step 3: Create Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### Step 4: Activate Virtual Environment (Windows)
-
-```powershell
-venv\Scripts\activate
-```
-
-### Step 5: Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 6: Run Perception Pipeline
-
-```bash
-python simulator/src/perception_pipeline.py
-```
-
-### Step 7: Run Automated Tests
+**Test command:**
 
 ```bash
 python -m pytest tests -v
 ```
 
-### Step 8: Run Benchmark
+**Recorded result:** 4 tests passed.
+
+These tests validate basic dataset-file availability and image loading. They do not represent complete integration, model accuracy, or autonomous-driving system validation.
+
+## 12. CARLA Simulator Status
+
+A CARLA client script and documentation were prepared under:
+
+`simulator/carla/`
+
+The client is intended to connect to a CARLA simulator running locally.
+
+However, CARLA was not installed in the development environment, so a live simulator connection, virtual camera integration, and CARLA-to-ROS 2 streaming have not been completed.
+
+## 13. Implementation Status and Limitations
+
+### Implemented and Tested
+
+- YOLOv8 object detection on sample images.
+- Basic OpenCV lane detection prototype.
+- MiDaS relative depth estimation experiment.
+- SegFormer semantic segmentation inference experiment.
+- KITTI training-label class distribution analysis.
+- Basic YOLOv8 and ByteTrack tracking experiment.
+- ROS 2 raw and processed image-topic workflow.
+- YOLOv8 ONNX export and inference validation.
+- CPU inference benchmarking.
+- Four basic automated tests passed.
+
+### Pending or Not Yet Validated
+
+- Custom YOLO fine-tuning on the KITTI dataset.
+- Quantitative object-tracking accuracy evaluation.
+- Quantitative comparison of lane detection and semantic segmentation.
+- Live CARLA simulator integration.
+- CARLA virtual camera streaming through ROS 2.
+- TensorRT optimization and benchmarking.
+- Complete obstacle-reaction demonstration using CARLA.
+- Comprehensive end-to-end perception accuracy evaluation.
+- Verified Weights & Biases experiment logging.
+
+### Hardware Limitations
+
+The project was developed and tested in a CPU-based environment with limited system resources. The benchmark results are specific to the tested hardware and software configuration.
+
+## 14. Installation and Setup
+
+### Prerequisites
+
+- Python
+- Git
+- Visual Studio Code (recommended)
+- Required Python packages
+- ROS 2 for ROS-related experiments
+
+### Clone the Repository
 
 ```bash
-python src/optimization/benchmark.py
+git clone https://github.com/bayyabhavana/Autonomous-Driving-Perception.git
+cd Autonomous-Driving-Perception
 ```
 
-### Step 9: Export YOLOv8 to ONNX
+### Create a Virtual Environment
 
 ```bash
-python src/optimization/export_onnx.py
+python -m venv .venv
 ```
 
-## 🧪 Testing
+### Activate the Environment
 
-The project includes automated tests to verify:
+**Windows:**
 
-- Dataset image availability.
-- Image loading functionality.
-- Pipeline input validation.
-
-**Test Execution Result:**
-
-```text
-4 passed
+```bash
+.venv\Scripts\activate
 ```
 
-All four implemented test cases passed successfully.
+**Linux / WSL:**
 
-## 📦 Model Information
+```bash
+source .venv/bin/activate
+```
 
-- Object Detection Model: YOLOv8n
-- Depth Estimation Model: MiDaS
-- Model Export Format: ONNX
-- Inference Runtime: ONNX Runtime
-- Execution Device: CPU
+### Install Dependencies
 
-## 📁 Output Directory
+```bash
+pip install -r requirements.txt
+```
 
-Generated results are organized under:
+Some experiments may require additional packages or model downloads depending on the environment.
 
-- `outputs/` – Module-specific outputs, benchmarks and screenshots.
-- `simulator/outputs/` – Integrated perception pipeline results.
+### Run the Perception Pipeline
 
-## 🔮 Future Enhancements
+```bash
+python simulator/src/perception_pipeline.py
+```
 
-- Real-time object detection and tracking improvements.
-- GPU-based inference acceleration.
-- Improved lane detection under different weather conditions.
-- Integration with autonomous driving simulators.
-- Improved perception accuracy and performance evaluation.
+### Run KITTI Dataset Analysis
 
-## 🏁 Conclusion
+```bash
+python src/dataset_analysis/kitti_analysis.py
+```
 
-The Autonomous Driving Perception Stack demonstrates the integration of computer vision and deep learning techniques for autonomous driving applications.
+### Run Object Tracking
 
-The project combines object detection, lane detection, lane segmentation, object tracking and depth estimation into a unified perception workflow.
+```bash
+python src/object_tracking/track.py
+```
 
-The integrated pipeline executed successfully, and all four implemented automated tests passed.
+### Run Lane Detection
 
-## 👩‍💻 Author
+```bash
+python src/lane_detection/lane.py
+```
 
-**Bhavana Goud**
+### Run Semantic Segmentation
 
-GitHub: https://github.com/bayyabhavana
+```bash
+python src/lane_segmentation/segmentation.py
+```
 
-**Project Repository:**
+### Run Tests
 
-https://github.com/bayyabhavana/Autonomous-Driving-Perception
+```bash
+python -m pytest tests -v
+```
 
----
+Run each script from the repository root. Some modules may require their own model weights, dataset files, or environment-specific dependencies.
 
-⭐ If you find this project interesting, feel free to explore the repository.
+## 15. Future Enhancements
+
+- Fine-tune YOLOv8 using the KITTI or BDD100K dataset.
+- Improve lane detection under different road and lighting conditions.
+- Evaluate segmentation and lane-detection performance quantitatively.
+- Integrate CARLA with ROS 2 for simulated camera input.
+- Implement TensorRT optimization on compatible NVIDIA hardware.
+- Evaluate object tracking using standard tracking metrics.
+- Improve real-time perception performance.
+- Build a complete simulation-based obstacle detection and reaction demonstration.
+- Expand automated testing and system-level validation.
+
+## 16. Conclusion
+
+This project explores important computer vision techniques used in autonomous driving perception systems.
+
+It includes object detection, object tracking experiments, lane detection, semantic segmentation, monocular depth estimation, KITTI label analysis, ROS 2 image communication, and ONNX model experimentation.
+
+The project provided practical experience in developing and testing AI/ML perception modules, working with computer vision libraries, analyzing dataset labels, and benchmarking model inference.
+
+Some advanced components, including live CARLA integration and TensorRT optimization, remain future work.
+
+## Author
+
+**Bayya Bhavana Goud**
+
+GitHub: [bayyabhavana](https://github.com/bayyabhavana)
+
+Project Repository: [Autonomous-Driving-Perception](https://github.com/bayyabhavana/Autonomous-Driving-Perception)
