@@ -22,3 +22,21 @@ venv/
 # Operating system
 .DS_Store
 Thumbs.db
+wandb/
+
+# Python environments and cache
+**/.venv*/
+**/__pycache__/
+*.pyc
+
+# ROS 2 generated folders
+**/build/
+**/install/
+**/log/
+
+# Generated experiment files
+**/runs/
+wandb/
+
+# Temporary files
+*.tmp
