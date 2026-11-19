@@ -3,79 +3,129 @@ import streamlit as st
 import csv
 from pathlib import Path
 
+# Project paths
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUTS = ROOT / "simulator" / "outputs"
 
+# Page configuration
 st.set_page_config(
     page_title="Autonomous Driving Perception",
     page_icon="🚗",
     layout="wide"
 )
 
+# Main heading
 st.title("🚗 Autonomous Driving Perception")
-st.subheader("AI-powered Road Scene Analysis")
+st.subheader("AI-Powered Road Scene Analysis")
 
 st.write(
-    "A computer vision project demonstrating object detection, "
-    "lane detection, segmentation and relative depth estimation."
+    "An AI and computer vision project demonstrating "
+    "object detection, lane detection, segmentation "
+    "and monocular relative depth estimation."
 )
 
-st.info(
-    "This website displays previously generated project results. "
-    "The full inference pipeline runs locally, not on this website."
-)
+st.divider()
 
-st.header("Perception Results")
+# Perception results
+st.header("🔍 Perception Results")
 
 images = [
     ("Object Detection and Lane Detection", "perception_result.jpg"),
-    ("MiDaS Relative Depth Map", "depth_result.jpg"),
+    ("MiDaS Relative Depth Estimation", "depth_result.jpg"),
     ("Lane Detection", "lane_result.jpg"),
     ("Edge Detection", "edge_result.jpg")
 ]
 
 for title, filename in images:
-    path = OUTPUTS / filename
     st.subheader(title)
-    if path.exists():
-        st.image(str(path), use_container_width=True)
+    image_path = OUTPUTS / filename
+
+    if image_path.exists():
+        st.image(str(image_path), use_container_width=True)
     else:
-        st.warning(f"Image not found: {filename}")
+        st.warning(f"Result image not found: {filename}")
 
-st.header("ONNX Performance Benchmark")
+st.divider()
 
-benchmark = ROOT / "outputs" / "benchmark" / "benchmark_results.csv"
+# Benchmark results
+st.header("⚡ ONNX Performance Benchmark")
 
-if benchmark.exists():
-    with benchmark.open("r", encoding="utf-8") as file:
+benchmark_path = (
+    ROOT / "outputs" / "benchmark" / "benchmark_results.csv"
+)
+
+if benchmark_path.exists():
+    with benchmark_path.open(
+        "r", encoding="utf-8-sig", newline=""
+    ) as file:
         rows = list(csv.DictReader(file))
+
     if rows:
         st.dataframe(rows, use_container_width=True)
     else:
-        st.info("No benchmark records found.")
+        st.info("No benchmark records available.")
 else:
-    st.info("Benchmark results are available in GitHub.")
+    st.info("Benchmark CSV is not available.")
 
-st.header("KITTI Dataset Analysis")
+st.divider()
 
-chart = ROOT / "outputs" / "dataset_analysis" / "kitti_class_distribution.png"
+# KITTI dataset analysis
+st.header("📊 KITTI Dataset Class Distribution")
 
-if chart.exists():
-    st.image(str(chart), use_container_width=True)
+chart_path = (
+    ROOT / "outputs" / "dataset_analysis"
+    / "kitti_class_distribution.png"
+)
+
+if chart_path.exists():
+    st.image(str(chart_path), use_container_width=True)
 else:
-    st.info("KITTI class distribution chart is available in GitHub.")
+    st.info("KITTI class distribution chart is not available.")
 
-st.header("Project Technologies")
+csv_path = (
+    ROOT / "outputs" / "dataset_analysis"
+    / "kitti_class_distribution.csv"
+)
+
+if csv_path.exists():
+    with csv_path.open(
+        "r", encoding="utf-8-sig", newline=""
+    ) as file:
+        rows = list(csv.DictReader(file))
+
+    if rows:
+        st.dataframe(rows, use_container_width=True)
+
+st.divider()
+
+# Technologies
+st.header("🛠️ Technologies Used")
+
 st.markdown("""
-- YOLOv8 object detection
-- OpenCV lane detection
-- MiDaS relative depth estimation
-- SegFormer segmentation experiment
-- ROS 2 image communication
-- ONNX export and inference
+- YOLOv8 – Object Detection
+- OpenCV – Lane Detection
+- MiDaS – Relative Depth Estimation
+- SegFormer – Semantic Segmentation Experiment
+- ROS 2 – Image Communication
+- ONNX – Model Export and Inference
+- PyTorch – Deep Learning
+- Streamlit – Web Demonstration
+""")
+
+st.divider()
+
+# Project status
+st.header("📌 Project Information")
+
+st.write("""
+This project demonstrates individual autonomous-driving
+perception components and their integration experiments.
+
+The displayed results are generated from the project's
+local inference pipeline. The website is a results
+showcase and does not control a real vehicle.
 """)
 
 st.caption(
-    "Academic project demonstration. "
-    "Not a production autonomous-driving system."
+    "AIML-04 | Autonomous Driving Perception Stack"
 )
