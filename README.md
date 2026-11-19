@@ -478,5 +478,12 @@ Some advanced components, including live CARLA integration and TensorRT optimiza
 **Bayya Bhavana Goud**
 
 GitHub: [bayyabhavana](https://github.com/bayyabhavana)
+## Project Demonstration Videos
+
+### Demo Video 1
+[Watch Project Demonstration](https://drive.google.com/file/d/1XRTYFvYKVoFNitT1E1j3qjAsf_d-vNrY/view?usp=sharing)
+
+### Demo Video 2
+[Watch Additional Demonstration](https://drive.google.com/file/d/1Ch2MM67zELBBCsJw-IKdKh2SYPockflf/view?usp=sharing)
 
 Project Repository: [Autonomous-Driving-Perception](https://github.com/bayyabhavana/Autonomous-Driving-Perception)
